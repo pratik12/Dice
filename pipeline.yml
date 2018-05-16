@@ -26,10 +26,9 @@ jobs:
           caches:
             - path: ec2-repo/node_modules
           run:
-            path: ./deploy.sh
-
-        params:
-          NODE_ENV: test
+            path: ./ec2-repo/deploy.sh
+            params:
+              DEPLOY_KEY_PAIR: {{deploy_key_pair}}
 
 # jobs:
 #   - name: hello-world
