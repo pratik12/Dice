@@ -26,18 +26,7 @@ jobs:
           caches:
             - path: ec2-repo/node_modules
           run:
-            path: sh
-            args:
-            - -exc
-            - |
-              pwd
-              ls
-              cd ec2-repo
-              ls
-              yarn install --no-progress
-              yarn lint
-              CI=true yarn test
-              
+            path: ./deploy.sh
 
         params:
           NODE_ENV: test
