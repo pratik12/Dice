@@ -2,8 +2,7 @@
 echo "helo World"
 #rm DeployKeyPair.pem
 touch DeployKeyPair.pem
-apt-get update && apt-get -y install sudo
-sudo apt-get -y install openssh-client
+
 echo $DEPLOY_KEY_PAIR
 echo $DEPLOY_KEY_PAIR | sed -e 's/\(KEY-----\)\s/\1\n/g; s/\s\(-----END\)/\n\1/g' | sed -e '2s/\s\+/\n/g' > DeployKeyPair.pem
 #cat DeployKeyPair.pem
