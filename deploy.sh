@@ -1,5 +1,6 @@
 #!/bin/sh
 echo "helo World"
+ls -l /usr/bin/ssh
 #rm DeployKeyPair.pem
 touch DeployKeyPair.pem
 
