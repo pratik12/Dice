@@ -8,8 +8,13 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/test', async function (req, res, next) {
-  const res = await axios('https://api.ipify.org/?format=json');
-  res.send(res.data);
+  const res2 = await axios('https://api.ipify.org/?format=json');
+  res.send(res2.data);
+});
+
+router.get('/test2', async function (req, res, next) {
+  const res2 = await axios('https://api.ipify.org/?format=json');
+  res.send(res2.data);
 });
 
 module.exports = router;
