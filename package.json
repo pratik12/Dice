@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm install && pm2 start ./bin/www --watch"
+    "start": "npm install && pm2 start ./bin/www --watch --restart-delay 15000"
   },
   "dependencies": {
     "axios": "^0.18.0",
