@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "npm install && pm2 start ./bin/www --watch"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
