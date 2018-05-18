@@ -51,7 +51,7 @@ jobs:
       file: release-demo-ec2/ci/tasks/run-tests.yml
       input_mapping:
             ec2-repo: release-demo-ec2
-  - name: test-ec2-deploy
+  - name: master-ec2-deploy
     plan:
       - get: master-demo-ec2
         trigger: true
@@ -72,3 +72,24 @@ jobs:
           params:
             DEPLOY_KEY_PAIR: {{deploy_key_pair}}
             BRANCH_NAME: master
+  - name: develop-ec2-deploy
+    plan:
+      - get: develop-demo-ec2
+        trigger: true
+        passed: [develop-run-tests]
+      - task: deploy
+        input_mapping:
+          ec2-repo: develop-demo-ec2
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: sickp/alpine-sshd
+          inputs:
+            - name: ec2-repo
+          run:
+            path: ./ec2-repo/deploy.sh
+          params:
+            DEPLOY_KEY_PAIR: {{deploy_key_pair}}
+            BRANCH_NAME: develop
