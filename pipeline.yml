@@ -20,6 +20,12 @@ resources:
       uri: git@github.com:pratik12/Dice.git
       branch: develop
       private_key: ((github-private-key))
+  - name: release-demo-ec2
+    type: git-multibranch
+    source:
+      uri: git@github.com:pratik12/Dice.git
+      private_key: ((github-private-key))
+      branches: 'release/.*'
 jobs:
   - name: master-run-tests
     plan:
@@ -29,6 +35,22 @@ jobs:
       file: master-demo-ec2/ci/tasks/run-tests.yml
       input_mapping:
             ec2-repo: master-demo-ec2
+  - name: develop-run-tests
+    plan:
+    - get: develop-demo-ec2
+      trigger: true
+    - task: run-tests
+      file: develop-demo-ec2/ci/tasks/run-tests.yml
+      input_mapping:
+            ec2-repo: develop-demo-ec2
+  - name: release-run-tests
+    plan:
+    - get: release-demo-ec2
+      trigger: true
+    - task: run-tests
+      file: release-demo-ec2/ci/tasks/run-tests.yml
+      input_mapping:
+            ec2-repo: release-demo-ec2
   - name: test-ec2-deploy
     plan:
       - get: master-demo-ec2
