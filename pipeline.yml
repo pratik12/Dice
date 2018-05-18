@@ -8,7 +8,7 @@ resource_types:
     source:
       repository: cfcommunity/git-multibranch-resource
 resources:
-  - name: git-demo-ec2
+  - name: master-demo-ec2
     type: git
     source:
       uri: git@github.com:pratik12/Dice.git
@@ -17,20 +17,20 @@ resources:
 jobs:
   - name: master-run-tests
     plan:
-    - get: git-demo-ec2
+    - get: master-demo-ec2
       trigger: true
     - task: run-tests
-      file: git-demo-ec2/ci/tasks/run-tests.yml
+      file: master-demo-ec2/ci/tasks/run-tests.yml
       input_mapping:
-            ec2-repo: git-demo-ec2
+            ec2-repo: master-demo-ec2
   - name: test-ec2-deploy
     plan:
-      - get: git-demo-ec2
+      - get: master-demo-ec2
         trigger: true
         passed: [master-run-tests]
       - task: deploy
         input_mapping:
-          ec2-repo: git-demo-ec2
+          ec2-repo: master-demo-ec2
         config:
           platform: linux
           image_resource:
