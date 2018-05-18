@@ -1,0 +1,23 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: tribalscaledocker/node-postgres
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    service postgresql start # starting the service
+    sudo -u postgres sh -c 'createuser root & createdb testdb' # creating a root user 
+    sudo -u postgres psql -c "ALTER USER root PASSWORD 'password';"
+    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO root"
+    psql -d testdb < ec2-repo/schema.sql
+    cd Dice
+    npm install
+    npm test
+inputs:
+- name: ec2-repo
+params:
+  NODE_ENV: test

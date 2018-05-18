@@ -1,34 +1,49 @@
+resource_types:
+  - name: pull-request
+    type: docker-image
+    source:
+      repository: jtarchie/pr
+  - name: git-multibranch
+    type: docker-image
+    source:
+      repository: cfcommunity/git-multibranch-resource
 resources:
-  - name: git-demo-ec2-repo
+  - name: git-demo-ec2
     type: git
     source:
       uri: git@github.com:pratik12/Dice.git
       branch: master
       private_key: ((github-private-key))
-
 jobs:
+  - name: master-run-tests
+  plan:
+  - get: git-demo-ec2
+    trigger: true
+  - task: run-tests
+    file: git-demo-ec2/ci/tasks/run-tests.yml
+    input_mapping:
+          ec2-repo: git-demo-ec2
   - name: test-ec2-deploy
     plan:
-      - get: git-demo-ec2-repo
+      - get: git-demo-ec2
         trigger: true
       - task: deploy
         input_mapping:
-          ec2-repo: git-demo-ec2-repo
+          ec2-repo: git-demo-ec2
         config:
           platform: linux
           image_resource:
             type: docker-image
             source:
-              repository: node
-              tag: '8-alpine'
+              repository: sickp/alpine-sshd
           inputs:
             - name: ec2-repo
-          caches:
-            - path: ec2-repo/node_modules
           run:
             path: ./ec2-repo/deploy.sh
-            params:
-              DEPLOY_KEY_PAIR: {{deploy_key_pair}}
+          params:
+            DEPLOY_KEY_PAIR: {{deploy_key_pair}}
+            BRANCH_NAME: master
+
 
 # jobs:
 #   - name: hello-world
