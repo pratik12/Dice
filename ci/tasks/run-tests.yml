@@ -14,10 +14,10 @@ run:
     # sudo -u postgres psql -c "ALTER USER root PASSWORD 'password';"
     # sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO root"
     # psql -d testdb < ec2-repo/schema.sql
-    cd Dice
+    cd ec2-repo
     npm install
     npm test
 inputs:
-  - name: Dice
+  - name: ec2-repo
 params:
   NODE_ENV: test
