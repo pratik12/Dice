@@ -16,6 +16,7 @@ pm2 stop all
 git pull --all
 git checkout $BRANCH_NAME
 git pull
+echo "the branch is now $BRANCH_NAME"
 git branch
 cd bin
 npm start
