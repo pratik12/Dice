@@ -10,10 +10,10 @@ run:
   - -exc
   - |
     service postgresql start # starting the service
-    sudo -u postgres sh -c 'createuser root & createdb testdb' # creating a root user 
-    sudo -u postgres psql -c "ALTER USER root PASSWORD 'password';"
-    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO root"
-    psql -d testdb < ec2-repo/schema.sql
+    # sudo -u postgres sh -c 'createuser root & createdb testdb' # creating a root user 
+    # sudo -u postgres psql -c "ALTER USER root PASSWORD 'password';"
+    # sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO root"
+    # psql -d testdb < ec2-repo/schema.sql
     cd Dice
     npm install
     npm test

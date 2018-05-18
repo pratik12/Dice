@@ -16,17 +16,18 @@ resources:
       private_key: ((github-private-key))
 jobs:
   - name: master-run-tests
-  plan:
-  - get: git-demo-ec2
-    trigger: true
-  - task: run-tests
-    file: git-demo-ec2/ci/tasks/run-tests.yml
-    input_mapping:
-          ec2-repo: git-demo-ec2
+    plan:
+    - get: git-demo-ec2
+      trigger: true
+    - task: run-tests
+      file: git-demo-ec2/ci/tasks/run-tests.yml
+      input_mapping:
+            ec2-repo: git-demo-ec2
   - name: test-ec2-deploy
     plan:
       - get: git-demo-ec2
         trigger: true
+        passed: [master-run-tests]
       - task: deploy
         input_mapping:
           ec2-repo: git-demo-ec2
