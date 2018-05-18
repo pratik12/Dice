@@ -18,6 +18,6 @@ run:
     npm install
     npm test
 inputs:
-- name: ec2-repo
+  - name: Dice
 params:
   NODE_ENV: test
